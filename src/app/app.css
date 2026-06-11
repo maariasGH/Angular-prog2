@@ -1,0 +1,74 @@
+/* Contenedor principal (opcional, por si querés asegurar el layout de la pantalla) */
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6; /* Un fondo gris claro muy sutil */
+    color: #333;
+  }
+  
+  /* Barra de navegación */
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* Los links por defecto */
+  nav a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  /* Efecto Hover (cuando pasás el mouse) */
+  nav a:hover {
+    color: #2563eb; /* Azul facha */
+    background-color: rgba(37, 99, 235, 0.08);
+  }
+  
+  /* Clase activa de Angular (para saber en qué pantalla estás) */
+  nav a.active-link {
+    color: #fff;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+  
+  /* El contenedor del contenido (debajo del nav) */
+  router-outlet + * {
+    display: block;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  /* Animación sutil para cuando cargan las pantallas */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
