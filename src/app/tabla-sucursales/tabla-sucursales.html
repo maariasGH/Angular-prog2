@@ -1,0 +1,48 @@
+<p>tabla-sucursales</p>
+<div class="contenedorPrincipal">
+  <div class="opciones">
+    <label>
+      Sucursales (1-5):
+      <input type="number" min="1" max="5" [value]="cantSucursales()" (change)="actualizarCantidad($event)">
+    </label>
+    <label>
+      Gráfico:
+      <select [value]="tipoGrafico()" (change)="cambiarTipoGrafico($event)">
+        <option value="lineas">Líneas</option>
+        <option value="barras">Barras</option>
+        <option value="acumuladas">Barras Acumuladas</option>
+      </select>
+    </label>
+  </div>
+  <br>
+  <div id="seccionInferior">
+    <div id="contenedorTabla">
+      <table>
+        <thead>
+          <tr>
+            <th>Mes</th>
+            @for (sucursal of sucursalesvisibles(); track $index) {
+              <th>{{ sucursal }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (mes of meses; track f; let f = $index) {
+            <tr>
+              <td><strong>{{ mes }}</strong></td>
+              @for (sucursal of sucursalesvisibles(); track c; let c = $index) {
+                <td>
+                  <input type="number" 
+                         [value]="datos[f][c]" 
+                         (input)="cambiarDato(f, c, $event)">
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    
+    <canvas #graficoCanvas width="800" height="400"></canvas>
+  </div>
+</div>
