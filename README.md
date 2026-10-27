@@ -30,26 +30,6 @@
 
 ---
 
-## 🎯 Capturas
-
-<div align="center">
-<table>
-<tr>
-<td align="center"><strong>Home</strong><br/><img src="https://via.placeholder.com/400x250/2563eb/ffffff?text=Home+Dashboard" alt="Home" width="300"/></td>
-<td align="center"><strong>Clientes</strong><br/><img src="https://via.placeholder.com/400x250/10b981/ffffff?text=Clientes+Table" alt="Clientes" width="300"/></td>
-<td align="center"><strong>Sucursales</strong><br/><img src="https://via.placeholder.com/400x250/f59e0b/ffffff?text=Sucursales+Table" alt="Sucursales" width="300"/></td>
-</tr>
-<tr>
-<td align="center"><strong>Ventas</strong><br/><img src="https://via.placeholder.com/400x250/ef4444/ffffff?text=Ventas+Table" alt="Ventas" width="300"/></td>
-<td align="center" colspan="2"><strong>Responsive Mobile</strong><br/><img src="https://via.placeholder.com/400x250/64748b/ffffff?text=Mobile+View" alt="Mobile" width="300"/></td>
-</tr>
-</table>
-</div>
-
-> 💡 *Reemplaza los placeholders con capturas reales de tu app corriendo en `http://localhost:4200`*
-
----
-
 ## ⚡ Inicio Rápido
 
 ### Prerrequisitos
