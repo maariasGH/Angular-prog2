@@ -1,26 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticulosService } from '../articulos.service';
 import { CommonModule } from '@angular/common';
+
 @Component({
- 
-  selector: 'app-lista-sucursales',
-  templateUrl: './lista-sucursales.component.html',
-  styleUrls: ['./lista-sucursales.component.css'],
   providers: [ArticulosService],
+  selector: 'app-lista-sucursales',
+  templateUrl: './lista-sucursales.html',
+  styleUrls: ['./lista-sucursales.component.css'],
   imports: [CommonModule]
 })
 export class ListaSucursalesComponent implements OnInit {
-sucursales:any=[];
+  sucursales: any[] = [];
+  cargando = false;
+  error = '';
 
-  constructor(private sucServ:ArticulosService) { }
+  constructor(private sucServ: ArticulosService) { }
 
   ngOnInit(): void {
-  this.recuperarSucus();
+    this.recargar();
   }
-  recuperarSucus(){
-    this.sucServ.recuperarSucus().subscribe(ss => {this.sucursales = (ss);
-  //alert (JSON.stringify(this.sucursales));
-  });
-}
 
+  recargar() {
+    this.cargando = true;
+    this.error = '';
+
+    this.sucServ.recuperarSucus().subscribe({
+      next: (data: any) => {
+        this.sucursales = (data as any[]) || [];
+        this.cargando = false;
+      },
+      error: (err) => {
+        this.error = 'Error al cargar las sucursales';
+        this.cargando = false;
+        console.error(err);
+      }
+    });
+  }
 }

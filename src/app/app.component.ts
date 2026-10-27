@@ -9,8 +9,8 @@ import { CommonModule } from '@angular/common';
 @Component({
   providers: [ArticulosService],
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  templateUrl: './app.html',
+  styleUrls: ['./app.css'],
   imports: [RouterOutlet, CommonModule],
 })
 export class AppComponent implements OnInit{

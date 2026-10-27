@@ -1,35 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-
-import {CommonModule} from '@angular/common'
-
 import { ArticulosService } from '../articulos.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   providers: [ArticulosService],
   selector: 'app-clientes',
-  templateUrl: './clientes.component.html',
+  templateUrl: './clientes.html',
   styleUrls: ['./clientes.component.css'],
   imports: [CommonModule]
 })
 export class ClientesComponent implements OnInit {
-meses:any=[];
-
-clients:any=[];
+  clientes: any[] = [];
+  cargando = false;
+  error = '';
 
   constructor(private artServ: ArticulosService) { }
 
   ngOnInit(): void {
-   
-     this.recuperarClientes();
-   
+    this.recargar();
   }
-  recuperarClientes(): void {
-  //  alert("pre");
-    this.artServ.recuperarClientes().subscribe((p99): void => {this.clients = (p99)
-    //  this.artServ.recuperarClientes().subscribe(p99 => {alert(JSON.stringify(p99));
-  })
-  //alert (JSON.stringify(this.clients));
-  //alert("ost");
-    }
-    
+
+  recargar() {
+    this.cargando = true;
+    this.error = '';
+
+    this.artServ.recuperarClientes().subscribe({
+      next: (data: any) => {
+        this.clientes = (data as any[]) || [];
+        this.cargando = false;
+      },
+      error: (err) => {
+        this.error = 'Error al cargar los clientes';
+        this.cargando = false;
+        console.error(err);
+      }
+    });
+  }
 }

@@ -1,46 +1,64 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticulosService } from '../articulos.service';
 import { CommonModule } from '@angular/common';
+
 @Component({
   providers: [ArticulosService],
   selector: 'app-ventas',
-  templateUrl: './ventas.component.html',
+  templateUrl: './ventas.html',
   styleUrls: ['./ventas.component.css'],
   imports: [CommonModule]
 })
 export class VentasComponent implements OnInit {
-  ventas : any=[];
-  sales :any=Array(Array());
-  meses: any=[];
-  sucursales:any=[];
-  constructor(private VentServ:ArticulosService) { }
+  ventas: any[] = [];
+  sucursales: any[] = [];
+  cargando = false;
+  error = '';
+
+  constructor(private VentServ: ArticulosService) { }
 
   ngOnInit(): void {
-this.getMeses();
-this.getSucus();
-this.getVentas();
-
+    this.recargar();
   }
 
-getVentas()
-{
-    this.VentServ.recuperarVentas().subscribe(ppp => {this.ventas = (ppp);
- //alert (JSON.stringify(this.ventas.length));
-   for (let m=0;m<this.ventas.length;m++){
-     this.sales[m]=[];
-     for (let s= 0; s<5;s++){
-       this.sales[m][s] = this.ventas[m][s];
-     }
-     // alert (JSON.stringify(this.sales));
-   };
-   });
-}
+  recargar() {
+    this.cargando = true;
+    this.error = '';
 
-    getMeses(){
-  this.VentServ.recuperarMeses().subscribe(mm=> {this.meses = mm});
+    this.VentServ.recuperarVentas().subscribe({
+      next: (data: any) => {
+        this.ventas = (data as any[]) || [];
+        this.cargando = false;
+      },
+      error: (err) => {
+        this.error = 'Error al cargar las ventas';
+        this.cargando = false;
+        console.error(err);
+      }
+    });
+
+    this.VentServ.recuperarSucus().subscribe({
+      next: (data: any) => {
+        this.sucursales = (data as any[]) || [];
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
-getSucus(){
-  this.VentServ.recuperarSucus().subscribe(sss=> {this.sucursales = sss});
-}
-  
+
+  formatearFecha(fecha: string): string {
+    if (!fecha) return '-';
+    const date = new Date(fecha);
+    return date.toLocaleDateString('es-AR');
+  }
+
+  getMonto(venta: any): number {
+    // La API ahora devuelve el total directamente en venta.total
+    return venta.total ? parseFloat(venta.total) : 0;
+  }
+
+  formatearMonto(monto: number): string {
+    return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(monto);
+  }
 }
