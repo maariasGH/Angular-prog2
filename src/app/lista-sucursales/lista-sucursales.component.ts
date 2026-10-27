@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ArticulosService } from '../articulos.service';
 import { CommonModule } from '@angular/common';
 
@@ -13,7 +13,7 @@ export class ListaSucursalesComponent implements OnInit {
   cargando = false;
   error = '';
 
-  constructor(private sucServ: ArticulosService) { }
+  constructor(private sucServ: ArticulosService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.recargar();
@@ -22,15 +22,16 @@ export class ListaSucursalesComponent implements OnInit {
   recargar() {
     this.cargando = true;
     this.error = '';
-
     this.sucServ.recuperarSucus().subscribe({
       next: (data: any) => {
         this.sucursales = (data as any[]) || [];
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = 'Error al cargar las sucursales';
         this.cargando = false;
+        this.cdr.detectChanges();
         console.error(err);
       }
     });

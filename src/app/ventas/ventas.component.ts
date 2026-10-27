@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { ArticulosService } from '../articulos.service';
 import { CommonModule } from '@angular/common';
 
@@ -14,7 +14,7 @@ export class VentasComponent implements OnInit {
   cargando = false;
   error = '';
 
-  constructor(private VentServ: ArticulosService) { }
+  constructor(private VentServ: ArticulosService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.recargar();
@@ -28,10 +28,12 @@ export class VentasComponent implements OnInit {
       next: (data: any) => {
         this.ventas = (data as any[]) || [];
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = 'Error al cargar las ventas';
         this.cargando = false;
+        this.cdr.detectChanges();
         console.error(err);
       }
     });

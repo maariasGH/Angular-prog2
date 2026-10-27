@@ -3,7 +3,7 @@
   <div class="card">
     <div class="card-header">
       <h2 class="card-title">Listado de Ventas</h2>
-      <button class="btn btn-primary btn-sm" (click)="recargar()" [disabled]="cargando">
+      <button class="btn btn-primary btn-sm" (click)="recargar()" [disabled]="cargando" style="background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);">
         @if (cargando) {
           <svg class="spinner" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path stroke-linecap="round" d="M12 2a10 10 0 0 1 10 10"></path></svg>
         } @else {

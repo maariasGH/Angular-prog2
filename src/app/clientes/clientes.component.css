@@ -1,0 +1,98 @@
+/* Clientes Component - Table Enhancements */
+.table-container {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+thead {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+}
+
+th {
+  padding: 1rem 0.875rem;
+  text-align: left;
+  font-weight: 600;
+  color: white;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: none;
+  white-space: nowrap;
+}
+
+tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgba(37, 99, 235, 0.02);
+}
+
+tbody tr:hover {
+  background-color: rgba(37, 99, 235, 0.08) !important;
+}
+
+td {
+  padding: 0.875rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status badge improvements */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.badge-secondary {
+  background: rgba(100, 116, 139, 0.12);
+  color: #475569;
+}
+
+/* Cell content */
+td:first-child {
+  font-weight: 600;
+  color: var(--primary);
+  font-family: 'Inter', monospace;
+}
+
+td:nth-child(2),
+td:nth-child(3) {
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .table-container {
+    border: none;
+    border-radius: 0;
+  }
+  
+  th, td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}
