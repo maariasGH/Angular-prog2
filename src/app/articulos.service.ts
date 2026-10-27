@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({ 
-  providedIn: 'root' // <-- ¡Descomentado! Obligatorio para que Angular lo reconozca
+  providedIn: 'root'
 })
 export class ArticulosService {
-  // ATENCIÓN: Cambia "ProyectoPHP" por el nombre exacto de la carpeta 
-  // donde guardaste tus archivos Get_Meses.php, etc., dentro de C:\xampp\htdocs\
+  // IMPORTANTE: Cambia "bd-sucur" por el nombre exacto de tu carpeta en C:\xampp\htdocs\
+  // Ejemplos comunes: "ProyectoPHP", "mi-api", "backend", etc.
   url = 'http://localhost/bd-sucur/'; 
 
   constructor(private http: HttpClient) { }

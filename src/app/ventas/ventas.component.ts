@@ -3,9 +3,8 @@ import { ArticulosService } from '../articulos.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  providers: [ArticulosService],
   selector: 'app-ventas',
-  templateUrl: './ventas.html',
+  templateUrl: './ventas.component.html',
   styleUrls: ['./ventas.component.css'],
   imports: [CommonModule]
 })
