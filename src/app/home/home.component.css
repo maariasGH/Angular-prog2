@@ -1,0 +1,155 @@
+/* Contenedor principal y animación de entrada */
+.home-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Cabecera (Hero Section) */
+.hero-section {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 4.5rem 2rem;
+  text-align: center;
+  margin-bottom: 3.5rem;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25);
+}
+
+.hero-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.5px;
+}
+
+.hero-title span {
+  color: #fbbf24; /* Tono naranja/amarillo para resaltar el nombre */
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+  font-weight: 300;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Botones */
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 0.85rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #f59e0b;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(245, 158, 11, 0.4);
+}
+
+.btn-secondary {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Sección de Tarjetas (CSS Grid) */
+.features-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f3f4f6;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.feature-card:hover, .feature-card:focus {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: #bfdbfe;
+}
+
+/* Íconos de las tarjetas */
+.icon-wrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .icon-wrapper {
+  transform: scale(1.1);
+}
+
+/* Colores específicos para cada ícono */
+.clientes-icon { background-color: #eff6ff; color: #3b82f6; }
+.sucursales-icon { background-color: #f5f3ff; color: #8b5cf6; }
+.ventas-icon { background-color: #fffbeb; color: #f59e0b; }
+
+.feature-card h3 {
+  color: #1f2937;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.feature-card p {
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Animación inicial */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Diseño Responsivo para móviles */
+@media (max-width: 768px) {
+  .hero-title { font-size: 2.2rem; }
+  .hero-section { padding: 3rem 1.5rem; }
+  .hero-actions { flex-direction: column; }
+  .home-container { padding: 1rem; }
+}

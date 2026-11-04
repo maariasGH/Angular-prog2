@@ -1,0 +1,21 @@
+<header class="header" *ngIf="!isLoginPage">
+  <nav class="nav">
+    <a routerLink="/home" class="logo">La Casa del Parafuso</a>
+    <ul class="nav-links" *ngIf="authService.currentUser as user">
+      <li *ngIf="user.rol === 'administrador'"><a routerLink="/home" routerLinkActive="active">Inicio</a></li>
+      <li *ngIf="user.rol === 'administrador'"><a routerLink="/clientes" routerLinkActive="active">Clientes</a></li>
+      <li *ngIf="user.rol === 'administrador'"><a routerLink="/sucursales" routerLinkActive="active">Sucursales</a></li>
+      <li *ngIf="user.rol === 'administrador' || user.rol === 'vendedor'"><a routerLink="/ventas" routerLinkActive="active">Ventas</a></li>
+      <li><button class="btn btn-secondary btn-sm" type="button" (click)="logout()">Cerrar sesión</button></li>
+    </ul>
+    <a *ngIf="!authService.isAuthenticated" routerLink="/login" class="btn btn-primary btn-sm">Iniciar sesión</a>
+  </nav>
+</header>
+
+<main [class.login-content]="isLoginPage" [class.main-content]="!isLoginPage">
+  <router-outlet />
+</main>
+
+<footer class="footer" *ngIf="!isLoginPage">
+  <p>&copy; 2026 La Casa del Parafuso - Proyecto en Angular Conectado a PHP/MySQL</p>
+</footer>
