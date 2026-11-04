@@ -4,7 +4,7 @@
 
 ![Angular](https://img.shields.io/badge/Angular-22.2-DD0031?logo=angular&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?logo=php&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?logo=mysql&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-10.4%2B-003545?logo=mariadb&logoColor=white)
 ![RxJS](https://img.shields.io/badge/RxJS-7.8-B7178C?logo=reactivex&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -33,11 +33,19 @@
 
 ## 🔐 Autenticación y permisos
 
-- El Home es público. El botón **Iniciar sesión** está en la esquina superior derecha.
-- `vendedor` solo puede acceder a Ventas; `administrador` puede acceder a todos los módulos.
-- El backend crea una sesión PHP y valida el rol también en cada endpoint protegido.
-- Las contraseñas se validan y almacenan con bcrypt (`password_hash`/`password_verify`). El volcado incluye el usuario local `admin` con contraseña inicial `123456`; si una base existente conserva contraseñas en texto plano, se convierten a bcrypt tras un inicio de sesión correcto.
-- El CORS del backend permite `http://localhost:4200` y `http://127.0.0.1:4200`; agregá el origen de tu frontend en `api_auth.php` si usás otro.
+El Home es público y muestra el botón **Iniciar sesión** en la esquina superior derecha. Al iniciar sesión, el menú y las rutas disponibles dependen del rol:
+
+| Rol | Acceso |
+|-----|--------|
+| Visitante (sin iniciar sesión) | Home |
+| `vendedor` | Ventas; después de iniciar sesión se redirige directamente allí |
+| `administrador` | Home, Clientes, Sucursales y Ventas |
+
+Los guards de Angular controlan la navegación de la interfaz y PHP comprueba la sesión y el rol en cada endpoint. La sesión se mantiene mediante una cookie PHP `HttpOnly`; cerrar sesión elimina la sesión del servidor.
+
+Las contraseñas se verifican y almacenan con bcrypt usando `password_verify()` y `password_hash()`. El usuario inicial del SQL de ejemplo es `admin` con contraseña `123456`; cambiá esa contraseña antes de publicar la aplicación. En bases anteriores que tengan la contraseña inicial en texto plano, el primer login correcto la actualiza a bcrypt.
+
+Los endpoints PHP aceptan solicitudes con credenciales desde `http://localhost:4200` y `http://127.0.0.1:4200`. Si tu frontend usa otro origen, agregalo a la lista permitida de `api_auth.php`.
 
 ---
 
@@ -46,20 +54,19 @@
 ### Prerrequisitos
 - **Node.js** ≥ 18.x
 - **npm** ≥ 9.x
-- **XAMPP** (Apache + MySQL) corriendo en `http://localhost`
+- **XAMPP** (Apache + MySQL/MariaDB) corriendo en `http://localhost`
 - **Angular CLI** `npm i -g @angular/cli@22`
 
 ### 1. Base de datos (MySQL)
-Importá `programacion2.sql` desde phpMyAdmin. El backend espera una base llamada `programacion2`; revisá las credenciales de conexión en `conexion2.php`.
+Importá `programacion2.sql` desde phpMyAdmin en una base llamada `programacion2`. El volcado contiene las tablas y un usuario de prueba. Si usás otra base o credenciales, actualizá `conexion2.php`.
 
 ### 2. Backend PHP (XAMPP)
 ```bash
-# Copia la carpeta del backend a htdocs
-cp -r backend/ C:/xampp/htdocs/bd-sucur/
-# O en Windows: copia manualmente a C:\xampp\htdocs\bd-sucur\
+# Copiá los archivos PHP del backend a esta carpeta
+C:\xampp\htdocs\bd-sucur\
 ```
 
-**Estructura esperada en `C:\xampp\htdocs\bd-sucur\`:**
+El backend debe incluir estos archivos en `C:\xampp\htdocs\bd-sucur\`:
 ```
 bd-sucur/
 ├── api_auth.php
@@ -69,7 +76,8 @@ bd-sucur/
 ├── Get_Sucus.php
 ├── Get_Clientes.php
 ├── Get_Ventas.php
-└── conexion2.php
+├── conexion2.php
+└── programacion2.sql
 ```
 
 ### 3. Frontend Angular
@@ -86,7 +94,17 @@ npm start
 # → http://localhost:4200/
 ```
 
-El frontend usa `http://localhost/bd-sucur/` como URL de API (ver `src/app/api-url.ts`). Apache y MySQL deben estar activos.
+El frontend usa `http://localhost/bd-sucur/` como URL de API (ver `src/app/api-url.ts`). Apache y MySQL/MariaDB deben estar activos. Para otra instalación o dominio, actualizá esa URL y la lista CORS de `api_auth.php`.
+
+### Endpoints y permisos
+
+| Endpoint | Permiso |
+|----------|---------|
+| `Login.php` / `Logout.php` | Acceso público para iniciar o cerrar sesión |
+| `Get_Ventas.php` | `administrador` y `vendedor` |
+| `Get_Clientes.php` | `administrador` |
+| `Get_Sucus.php` | `administrador` |
+| `Get_Meses.php` | `administrador` |
 
 ---
 
@@ -186,9 +204,9 @@ Cada feature tiene su **CSS scoped** (`*.component.css`) con tema de color propi
 
 | Problema | Solución |
 |----------|----------|
-| **Botones no navegan** | Verifica `routerLink` en `app.component.html` y rutas en `app.routes.ts` |
+| **Botones no navegan** | Verificá `routerLink` en `app.component.html` y las rutas/guards en `app-routing.module.ts` |
 | **"Cargando..." infinito** | Revisa consola (F12) → Network → llamadas a `/bd-sucur/…` |
-| **CORS bloqueado** | Añade headers en *todos* los PHP + maneja `OPTIONS` |
+| **CORS o cookie de sesión** | Usá `localhost:4200` o `127.0.0.1:4200`, verificá que Apache esté activo y que el origen figure en `api_auth.php` |
 | **Puerto 4200 ocupado** | `netstat -ano \| findstr :4200` → `taskkill /F /PID <PID>` |
 | **Datos vacíos** | Confirma que `Get_Clientes.php` y `Get_Ventas.php` existan y devuelvan JSON válido |
 | **Estilos rotos** | `npm run build` limpio + hard reload (Ctrl+Shift+R) |
